@@ -1,9 +1,5 @@
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
-
 fun main() {
-
+    val reader = InputReader("7")
     fun parseLine(line: String): Bag {
         val words = line.split(" ")
         val outerColor = "${words[0]} ${words[1]}"
@@ -22,8 +18,8 @@ fun main() {
 
     val bags = mutableListOf<Bag>()
     val colorToIndex = mutableMapOf<String, Int>()
-    while (hasNext()) {
-        bags.add(parseLine(readLn()))
+    while (reader.hasNext()) {
+        bags.add(parseLine(reader.readLn()))
         colorToIndex[bags.last().color] = bags.size - 1
     }
 
@@ -71,15 +67,3 @@ fun main() {
 data class Bag(val color: String, val contents: List<Content>)
 
 data class Content(val color: String, val amount: Int)
-
-// Read from file
-private val inputReader = InputStreamReader(FileInputStream(File("input/input7.txt")))
-private val lines = inputReader.readLines()
-private var currLine = -1
-private fun readLn(): String {
-    currLine++
-    return lines[currLine]
-}
-private fun hasNext(): Boolean {
-    return currLine + 1 in lines.indices
-}

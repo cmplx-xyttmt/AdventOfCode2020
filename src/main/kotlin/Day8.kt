@@ -1,8 +1,5 @@
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
-
 fun main() {
+    val reader = InputReader("8")
     val instructions = mutableListOf<Instruction>()
 
     fun terminates(instructions: List<Instruction>): Pair<Boolean, Int> {
@@ -28,8 +25,8 @@ fun main() {
         return Pair(curr == instructions.size, accumulator)
     }
 
-    while (hasNext()) {
-        val inst = readStrings()
+    while (reader.hasNext()) {
+        val inst = reader.readStrings()
         instructions.add(Instruction(inst[0], inst[1].toInt()))
     }
 
@@ -56,18 +53,3 @@ fun main() {
 }
 
 data class Instruction(val type: String, val value: Int)
-
-// Read from file
-private val inputReader = InputStreamReader(FileInputStream(File("input/input8.txt")))
-private val lines = inputReader.readLines()
-private var currLine = -1
-private fun readLn(): String {
-    currLine++
-    return lines[currLine]
-}
-
-private fun hasNext(): Boolean {
-    return currLine + 1 in lines.indices
-}
-
-private fun readStrings() = readLn().trim().split(" ")

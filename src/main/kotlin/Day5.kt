@@ -1,9 +1,5 @@
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
-
 fun main() {
-
+    val reader = InputReader("5")
     val binMap = mutableMapOf(
             'F' to 0,
             'B' to 1,
@@ -21,7 +17,7 @@ fun main() {
     }
 
     val passes = mutableListOf<Int>()
-    while (hasNext()) passes.add(boardingPassToID(readLn()))
+    while (reader.hasNext()) passes.add(boardingPassToID(reader.readLn()))
     println("Part 1: ${passes.maxOrNull()}")
 
     passes.sort()
@@ -31,16 +27,4 @@ fun main() {
             println("Part 2: ${passes[i] + 1}")
         }
     }
-}
-
-// Read from file
-private val inputReader = InputStreamReader(FileInputStream(File("input/input5.txt")))
-private val lines = inputReader.readLines()
-private var currLine = -1
-private fun readLn(): String {
-    currLine++
-    return lines[currLine]
-}
-private fun hasNext(): Boolean {
-    return currLine + 1 in lines.indices
 }

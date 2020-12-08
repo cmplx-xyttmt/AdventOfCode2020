@@ -1,13 +1,10 @@
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
-
 fun main() {
+    val reader = InputReader("6")
     val groups = mutableListOf<MutableSet<Char>>()
     groups.add(mutableSetOf())
     var new = true
-    while (hasNext()) {
-        val line = readLn()
+    while (reader.hasNext()) {
+        val line = reader.readLn()
         if (line.isEmpty()) {
             groups.add(mutableSetOf())
             new = true
@@ -19,18 +16,4 @@ fun main() {
     }
 //    println(groups)
     println(groups.map { it.size }.sum())
-}
-
-//// Input Reader
-//private fun readLn() = readLine()!!
-// Read from file
-private val inputReader = InputStreamReader(FileInputStream(File("input/input6.txt")))
-private val lines = inputReader.readLines()
-private var currLine = -1
-private fun readLn(): String {
-    currLine++
-    return lines[currLine]
-}
-private fun hasNext(): Boolean {
-    return currLine + 1 in lines.indices
 }

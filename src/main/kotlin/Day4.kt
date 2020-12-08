@@ -1,9 +1,5 @@
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
-
 fun main() {
-
+    val reader = InputReader("4")
     fun isValidDate(date: String, minYear: Int, maxYear: Int): Boolean {
         if (date.length != 4) return false
         val intDate = date.toIntOrNull() ?: return false
@@ -50,8 +46,8 @@ fun main() {
 //    val fields = 8
     var validPassports = 0
     var currFields = mutableMapOf<String, String>()
-    while (hasNext()) {
-        val line = readLn()
+    while (reader.hasNext()) {
+        val line = reader.readLn()
         if (line.isEmpty()) {
             if (isValidPassport(currFields)) validPassports++
 
@@ -64,17 +60,4 @@ fun main() {
     }
     if (isValidPassport(currFields)) validPassports++
     println(validPassports)
-}
-
-// Read from file
-private val inputReader = InputStreamReader(FileInputStream(File("input/input4.txt")))
-private val lines = inputReader.readLines()
-private var currLine = -1
-private fun hasNext(): Boolean {
-    return currLine + 1 in lines.indices
-}
-
-private fun readLn(): String {
-    currLine++
-    return lines[currLine]
 }
