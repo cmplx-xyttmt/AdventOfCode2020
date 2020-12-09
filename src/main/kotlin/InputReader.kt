@@ -22,4 +22,6 @@ class InputReader(day: String) {
     fun readInt() = readLn().toInt()
 
     fun readInts() = readStrings().map { it.toInt() }
+
+    fun readLong() = readLn().toLong()
 }
