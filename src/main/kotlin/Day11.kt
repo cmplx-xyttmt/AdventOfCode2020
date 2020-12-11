@@ -20,76 +20,21 @@ fun main() {
 
     fun countNeighbors(i: Int, j: Int, grid: List<String>): Int {
         var neighbors = 0
-        // left
-        for (dj in 1 until grid[i].length) {
-            if (j - dj !in grid[i].indices) break
-            if (grid[i][j - dj] == 'L') break
-            if (grid[i][j - dj] == '#') {
-                neighbors++
-                break
-            }
-        }
-        // right
-        for (dj in 1 until grid[i].length) {
-            if (j + dj !in grid[i].indices) break
-            if (grid[i][j + dj] == 'L') break
-            if (grid[i][j + dj] == '#') {
-                neighbors++
-                break
-            }
-        }
-        // up
-        for (di in 1 until grid.size) {
-            if (i - di !in grid.indices) break
-            if (grid[i - di][j] == 'L') break
-            if (grid[i - di][j] == '#') {
-                neighbors++
-                break
-            }
-        }
-        // down
-        for (di in 1 until grid.size) {
-            if (i + di !in grid.indices) break
-            if (grid[i + di][j] == 'L') break
-            if (grid[i + di][j] == '#') {
-                neighbors++
-                break
-            }
-        }
-        // top right
-        for (d in 1 until grid.size) {
-            if (i - d !in grid.indices || j + d !in grid[0].indices) break
-            if (grid[i - d][j + d] == 'L') break
-            if (grid[i - d][j + d] == '#') {
-                neighbors++
-                break
-            }
-        }
-        // top left
-        for (d in 1 until grid.size) {
-            if (i - d !in grid.indices || j - d !in grid[0].indices) break
-            if (grid[i - d][j - d] == 'L') break
-            if (grid[i - d][j - d] == '#') {
-                neighbors++
-                break
-            }
-        }
-        // bottom right
-        for (d in 1 until grid.size) {
-            if (i + d !in grid.indices || j + d !in grid[0].indices) break
-            if (grid[i + d][j + d] == 'L') break
-            if (grid[i + d][j + d] == '#') {
-                neighbors++
-                break
-            }
-        }
-        // bottom left
-        for (d in 1 until grid.size) {
-            if (i + d !in grid.indices || j - d !in grid[0].indices) break
-            if (grid[i + d][j - d] == 'L') break
-            if (grid[i + d][j - d] == '#') {
-                neighbors++
-                break
+        for (di in -1..1) {
+            for (dj in -1..1) {
+                if (i + di in grid.indices && j + dj in grid[i].indices && !(di == 0 && dj == 0)) {
+                    var r = i + di
+                    var c = j + dj
+                    while (r in grid.indices && c in grid[i].indices) {
+                        if (grid[r][c] == '#') {
+                            neighbors++
+                            break
+                        }
+                        if (grid[r][c] == 'L') break
+                        r += di
+                        c += dj
+                    }
+                }
             }
         }
         return neighbors
@@ -129,7 +74,7 @@ fun main() {
     println("Part 1: " + curr.map { row -> row.count { it == '#' } }.sum())
 
     curr = inputGrid.toList()
-//    simulate(curr, 2)
+
     while (true) {
         val next = simulate(curr, 2)
         if (next == curr) break
