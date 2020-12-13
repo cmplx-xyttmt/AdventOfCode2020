@@ -34,27 +34,14 @@ fun main() {
     println("Part 1: ${abs(position.x) + abs(position.y)}")
 
     fun rotateWayPoint(ship: Position, waypoint: Position, action: Char, direction: Int) {
-        var x = 0
-        var y = 0
-        val xDiff = waypoint.x - ship.x
-        val yDiff = waypoint.y - ship.y
-        val anticlockwise = if (action == 'L') 1 else -1
-        when (direction) {
-            1 -> {
-                x = ship.x + (-anticlockwise) * yDiff
-                y = ship.y + (anticlockwise) * xDiff
-            }
-            2 -> {
-                x = ship.x - xDiff
-                y = ship.y - yDiff
-            }
-            3 -> {
-                x = ship.x + (anticlockwise) * yDiff
-                y = ship.y + (-anticlockwise) * xDiff
-            }
+        var xDiff = waypoint.x - ship.x
+        var yDiff = waypoint.y - ship.y
+        repeat(direction) {
+            if (action == 'L') xDiff = -yDiff.also { yDiff = xDiff }
+            else xDiff = yDiff.also { yDiff = -xDiff }
         }
-        waypoint.x = x
-        waypoint.y = y
+        waypoint.x = ship.x + xDiff
+        waypoint.y = ship.y + yDiff
     }
 
     fun process2(ship: Position, waypoint: Position, move: String) {
