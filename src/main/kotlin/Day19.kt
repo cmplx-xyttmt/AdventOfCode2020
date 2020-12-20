@@ -1,4 +1,5 @@
 fun main() {
+    var start = System.currentTimeMillis()
     val reader = InputReader("19")
     val messages = mutableListOf<String>()
     val originalRules = mutableMapOf<Int, Rule>()
@@ -46,7 +47,9 @@ fun main() {
         val rules = originalRules.toMutableMap()
         for (rep8 in 1..reps) {
             for (rep11 in 1..reps) {
-                if (message.length < rep8 + rep11 * 2) break
+                // Note: the 3 and 5 are just estimates of how many characters each rule contributes
+                // They help speed up the part 2 solution from about 20 seconds to about 3 seconds
+                if (message.length < rep8 * 3 + rep11 * 5) break
                 rules[8] = Rule(8, listOf(List(rep8) { 42 }))
                 rules[11] = Rule(11, listOf(List(rep11) { 42 } + List(rep11) { 31 }))
                 val result = check(message, 0, rules[0]!!, rules)
@@ -56,13 +59,17 @@ fun main() {
         return false
     }
 
+    // Part 1
     val matching1 = messages.filter { matches(it, 1) }
     println("Part 1: ${matching1.size}")
+    println("Part 1 time: ${System.currentTimeMillis() - start}ms")
 
-    val maxReps = messages.maxByOrNull { it.length }!!.length/2
-    println(maxReps)
+    // Part 2
+    start = System.currentTimeMillis()
+    val maxReps = messages.maxByOrNull { it.length }!!.length / 2
     val matching2 = messages.filter { matches(it, maxReps) }
     println("Part 2: ${matching2.size}")
+    println("Part 2 time: ${System.currentTimeMillis() - start}ms")
 }
 
 data class Rule(val id: Int, val options: List<List<Int>>? = null, val char: Char? = null)
