@@ -23,9 +23,21 @@ fun main() {
         }
     }
 //    println(tiles[0])
-    println("${tiles.size} ${edgesToIds.size}")
-    println(edgesToIds.values.filter { it.size == 1 }.size)
-    println(edgesToIds.values.filter { it.size == 1 }.map { it[0] }.groupBy { it }.filter { it.value.size == 4 })
+//    println("${tiles.size} ${edgesToIds.size}")
+//    println(edgesToIds.values.filter { it.size == 1 }.size)
+    val corners = edgesToIds.values
+            .filter { it.size == 1 }
+            .map { it[0] }
+            .groupBy { it }
+            .filter { it.value.size == 4 }.keys
+    println("Part 1: ${corners.reduce { acc, l -> acc * l }}")
+
+    // This solution for part 1 is based on a lot of assumptions, so I'm not happy with it.
+    // TODO: Do part 2 later
+    // Check out these resources for solutions when stuck:
+    // https://www.reddit.com/r/adventofcode/comments/kgo01p/2020_day_20_solutions/
+    // https://www.youtube.com/watch?v=H0rTE9r9YmQ
+    //
 }
 
 data class Tile(val id: Long, val grid: List<String>) {
